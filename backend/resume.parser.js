@@ -98,7 +98,9 @@ function parseResume(resume) {
   let {title, heading, education, highlights, professionalExperience, otherAchievements, otherSections, references} = resume.fields
 
   return {
-    slug: slugify(title),
+    slug: slugify(title, {
+      lower: true
+    }),
     heading: parseHeading(heading),
     education: parseEducation(education),
     highlights: parseHighlights(highlights),

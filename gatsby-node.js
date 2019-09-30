@@ -24,7 +24,6 @@ exports.createPages = async ({ actions: { createPage } }) => {
 
 
   allResumes.forEach(resume => {
-    console.log()
         createPage({
             path: `/resume/${resume.slug}/`,
             component: require.resolve("./src/templates/resume.js"),
