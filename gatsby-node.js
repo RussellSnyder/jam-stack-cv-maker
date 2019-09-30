@@ -1,5 +1,9 @@
 const contentful = require('contentful')
 
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV}`,
+})
+
 if (process.env.CONTENTFUL_ACCESS_TOKEN && process.env.CONTENTFUL_SPACE_ID) {
     console.log(".env data read")
 } else {
