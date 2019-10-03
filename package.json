@@ -22,7 +22,8 @@
     "react": "^16.8.1",
     "react-bootstrap": "^1.0.0-beta.12",
     "react-dom": "^16.8.1",
-    "react-helmet": "^5.2.0"
+    "react-helmet": "^5.2.0",
+    "striptags": "^3.1.1"
   },
   "devDependencies": {
     "@contentful/rich-text-html-renderer": "^13.1.0",

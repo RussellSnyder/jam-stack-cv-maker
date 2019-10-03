@@ -56,7 +56,7 @@ function parseExperience(section) {
   }
 }
 
-function parseGenericeSection(section) {
+function parseGenericSection(section) {
   let {id, title, entries} = section.fields
 
   entries = entries.map(entry => {
@@ -96,7 +96,7 @@ function parseResume(resume) {
     return
   }
 
-  let {title, heading, education, highlights, professionalExperience, otherAchievements, otherSections, references} = resume.fields
+  let {title, heading, education, professionalExperience, publicSpeakingEvents, openSourceProjects, otherSections, references} = resume.fields
 
   return {
     slug: slugify(title, {
@@ -104,10 +104,10 @@ function parseResume(resume) {
     }),
     heading: parseHeading(heading),
     education: parseEducation(education),
-    highlights: parseHighlights(highlights),
     experience: parseExperience(professionalExperience),
-    achievements: parseGenericeSection(otherAchievements),
-    otherSections: otherSections.map(section => parseGenericeSection(section)),
+    publicSpeakingEvents: parseGenericSection(publicSpeakingEvents),
+    openSourceProjects: parseGenericSection(openSourceProjects),
+    otherSections: otherSections.map(section => parseGenericSection(section)),
     references: parseReferences(references),
   }
 }

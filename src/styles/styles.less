@@ -1,23 +1,38 @@
+@import (reference) "./globals";
+
 @import "typography";
 
 #heading {
   background: #ecfdff;
-}
-/*A4 measures 210 × 297*/
-section {
-  //margin-bottom: 4em;
-}
-
-section#highlights {
-  //border-left: 2px solid @alt-text-color;
-}
-
-article.entry {
-  margin-bottom: 1em;
-  .degree {
-    margin-bottom: 0;
+  #job-title, #personal-info {
+    font-weight: normal;
+    color: @text-body-color;
   }
-  &:last-of-type {
-    margin-bottom: 0;
+
+}
+
+.entry__title {
+  text-transform: uppercase;
+  margin-bottom: 0;
+}
+
+.section {
+  margin-bottom: 2em;
+  &__title {
+    color: @text-body-color;
+    margin-bottom: 0.75em;
+  }
+}
+
+
+article {
+  &.entry {
+    margin-bottom: 1.5em;
+    .degree {
+      margin-bottom: 0;
+    }
+    &:last-of-type {
+      margin-bottom: 0;
+    }
   }
 }
