@@ -57,7 +57,7 @@ function parseExperience(section) {
 }
 
 function parseGenericeSection(section) {
-  let {title, entries} = section.fields
+  let {id, title, entries} = section.fields
 
   entries = entries.map(entry => {
     return {
@@ -68,6 +68,7 @@ function parseGenericeSection(section) {
   })
 
   return {
+    id,
     title,
     entries
   }

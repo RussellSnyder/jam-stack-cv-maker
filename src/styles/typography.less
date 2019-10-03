@@ -1,15 +1,38 @@
 @import "~@fortawesome/fontawesome-free/css/all.min.css";
 @import (css) url(https://fonts.googleapis.com/css?family=Nunito+Sans|Roboto&display=swap);
 
+@text-body-color: #777777;
+@text-heading-color: #222222;
 
 * {
   font-family: 'Nunito Sans', sans-serif;
+  color: @text-body-color;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6, a {
   font-weight: bold;
+  color: @text-heading-color;
 }
 
 h1, h2, h3, h4 {
   font-family: 'Roboto', sans-serif;
 }
+
+p {
+  margin-bottom: 0;
+  line-height: 1.45em
+}
+b {
+  color: @text-heading-color;
+  font-family: 'Roboto', sans-serif;
+}
+
+.middot {
+  font-size: 0.4em;
+  vertical-align: middle;
+}
+
+.section__title {
+  color: @text-body-color
+}
+
