@@ -43,9 +43,13 @@ function parseExperience(section) {
   let {title, entries} = section.fields
 
   entries = entries.map(entry => {
+    let { techStack, description } = entry.fields;
+    techStack = techStack.split(", ");
+
     return {
       ...entry.fields,
-      description: documentToHtmlString(entry.fields.description)
+      techStack: techStack,
+      description: documentToHtmlString(description)
     }
 
   })

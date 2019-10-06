@@ -11,9 +11,28 @@
 
 }
 
-.entry__title {
-  text-transform: uppercase;
-  margin-bottom: 0;
+.tech-stack {
+  .tech {
+    color: @text-heading-color;
+    font-weight: bold;
+  }
+}
+
+
+.entry {
+  &__title {
+    text-transform: uppercase;
+    margin-bottom: 0;
+  }
+  &__key {
+    color: @text-body-color;
+    margin-right: 5px;
+  }
+  &__value {
+    p {
+      display: inline;
+    }
+  }
 }
 
 .section {
