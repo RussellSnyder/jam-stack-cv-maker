@@ -33,10 +33,15 @@
       display: inline;
     }
   }
+  &__description {
+    ul {
+      margin-bottom: 0;
+    }
+  }
 }
 
 .section {
-  margin-bottom: 2em;
+  margin-bottom: 3.5em;
   &__title {
     color: @text-body-color;
     margin-bottom: 0.75em;
@@ -46,7 +51,11 @@
 
 article {
   &.entry {
-    margin-bottom: 1.5em;
+    margin-bottom: 2em;
+
+    &:last-of-type {
+      margin-bottom: 0;
+    }
     .degree {
       margin-bottom: 0;
     }

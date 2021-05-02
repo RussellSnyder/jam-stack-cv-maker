@@ -1,20 +1,19 @@
+import moment from 'moment';
 import React from 'react';
-import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
-import moment from 'moment';
+import Row from 'react-bootstrap/Row';
 import Heading from '../components/Heading';
-import Page from '../components/Page';
-import Middot from '../components/Middot';
-import striptags from 'striptags';
 import Layout from '../components/Layout';
+import Middot from '../components/Middot';
+import Page from '../components/Page';
 
 const MAX_PAGE_HEIGHT = 1600
 const PAGE_ONE_ID = 'page-1';
 const PAGE_TWO_ID = 'page-2';
 
 
-const Education = ({title, entries}) => <section className="section text-right" id="education">
+const Education = ({title, entries}) => <section className="section text-right mb-0" id="education">
   <h2 className="section__title">{title}</h2>
   {entries.map(entry => {
     let {degree, description, endDate, institution, startDate} = entry;
@@ -48,8 +47,6 @@ const Experience = ({title, entries}) => <section className="section" id="experi
       <div className="entry__description" dangerouslySetInnerHTML={{__html: description}}/>
       <div className="tech-stack"><b>Techstack:</b>
         <span className="ml-2 tech">{techStack.join(", ")}</span>
-
-        {/*{techStack.map(tech => <span className="ml-2 tech">{tech},</span>)}*/}
       </div>
     </article>
   })}
@@ -97,7 +94,7 @@ const GenericSection = ({title, entries, id, center}) => {
   </section>
 }
 
-const OtherInterests = ({title, entries, id}) => <section className="section section-generic pt-2 mb-2" id={id}>
+const OtherInterests = ({title, entries, id}) => <section className="section mb-5" id={id}>
   <h2 className="section__title mb-2">{title}</h2>
   {entries.map(entry => {
     const {key, value} = entry;
@@ -116,18 +113,38 @@ const TechSection = ({title, entries, id}) => <section className="section sectio
   {entries.map(entry => {
     const {key, value} = entry;
 
-    return <Row key={key}>
+    return <Row key={key} className="mb-1">
       <Col xs={12}>
-        <b className="entry__key">{key}:</b>
+        <b className="entry__key">{key.toUpperCase()}:</b>
         <span className="entry__value" dangerouslySetInnerHTML={{__html: value}}/>
       </Col>
     </Row>
   })}
 </section>
 
-const References = ({title, referenceSection}) => <section id="references" className="section text-right">
+const References = ({title, referenceSection}) => <section id="references" className="section">
   <h2 className="section__title">{title}</h2>
   <article className="references" dangerouslySetInnerHTML={{__html: referenceSection}}/>
+</section>
+
+const Recommendation = ({recommender, jobTitle, date, excerpt, recommendation }) => (
+  <article className='entry'>
+    <h5 className="entry__title">{recommender}</h5>
+    <p className="entry__summary mb-1">
+      <b>{jobTitle}</b><Middot/>
+      {moment(date).format('MMM YYYY')}
+    </p>
+    <div className="entry__description" >
+        <strong className="mr-2">Excerpt:</strong>
+        <span>"{excerpt}"</span>
+        <a className="float-right d-print-none" href={recommendation}>Read Full</a>
+    </div>
+  </article>
+)
+
+const Recomendations = ({title, recommendations}) => <section id="references" className="section">
+  <h2 className="section__title">{title}</h2>
+  {recommendations.map(recommendation => <Recommendation key={recommendation.recommender} {...recommendation} />)}
 </section>
 
 
@@ -153,9 +170,11 @@ export default class Post extends React.Component {
   }
 
   render() {
-    const {heading, education, experience, publicSpeakingEvents, openSourceProjects, otherSections, references} = this.props.pageContext
+
+    const {heading, education, experience, publicSpeakingEvents, openSourceProjects, otherSections, references, recommendations} = this.props.pageContext
 
     const otherInterests = otherSections.find(section => section.id === 'otherInterests')
+    console.log({otherInterests});
     const technologies = otherSections.find(section => section.id === 'technologies')
     const spokenLanguages = otherSections.find(section => section.id === 'spokenLanguages')
     const socialMedia = otherSections.find(section => section.id === 'socialMedia')
@@ -173,7 +192,6 @@ export default class Post extends React.Component {
               </Col>
               <Col xs={7} className="border-left">
                 <TechSection {...technologies}/>
-                <OtherInterests {...otherInterests}/>
               </Col>
             </Row>
             <Row className="mb-2">
@@ -181,9 +199,14 @@ export default class Post extends React.Component {
                 <Experience {...experience}/>
               </Col>
             </Row>
+            <Row className="mb-2">
+              <Col>
+                <Recomendations { ...recommendations } />
+              </Col>
+            </Row>
           </Container>
         </Page>
-        <div id="print-spacer" className="d-print-block d-none"/>
+        {/* <div id="print-spacer" className="d-print-block d-none"/> */}
         <Page id={PAGE_TWO_ID}>
           <Container fluid className="px-5">
             {/*<Row className="mb-4 justify-content-center">*/}
@@ -197,14 +220,19 @@ export default class Post extends React.Component {
             {/*  </Col>*/}
             {/*</Row>*/}
             <Row>
-              <Col xs={3}>
+              <Col xs={4}>
                 <GenericSection {...spokenLanguages}/>
               </Col>
-              <Col xs={6}>
-                <GenericSection {...socialMedia} center/>
+              <Col xs={8}>
+                <OtherInterests {...otherInterests}/>
               </Col>
-              <Col xs={3}>
+            </Row>
+            <Row>
+              <Col xs={4}>
                 <References {...references} />
+              </Col>
+              <Col xs={8}>
+                <GenericSection {...socialMedia}/>
               </Col>
             </Row>
           </Container>

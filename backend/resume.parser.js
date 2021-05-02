@@ -1,12 +1,12 @@
-const {parseImage} = require('./contentful.parser');
+const { parseImage } = require('./contentful.parser');
 
-const {CONTENT_TYPES} = require('./contentful.service');
+const { CONTENT_TYPES } = require('./contentful.service');
 
-const {documentToHtmlString} = require('@contentful/rich-text-html-renderer');
+const { documentToHtmlString } = require('@contentful/rich-text-html-renderer');
 const slugify = require('slugify');
 
 function parseHighlights(section) {
-  let {highlightTitle: title, highlights} = section.fields
+  let { highlightTitle: title, highlights } = section.fields
   const entries = highlights.map(entry => {
 
     return {
@@ -23,7 +23,7 @@ function parseHighlights(section) {
 }
 
 function parseEducation(section) {
-  let {title, educationEntries} = section.fields
+  let { title, educationEntries } = section.fields
 
   const entries = educationEntries.map(entry => {
     return {
@@ -40,7 +40,7 @@ function parseEducation(section) {
 }
 
 function parseExperience(section) {
-  let {title, entries} = section.fields
+  let { title, entries } = section.fields
 
   entries = entries.map(entry => {
     let { techStack, description } = entry.fields;
@@ -61,7 +61,7 @@ function parseExperience(section) {
 }
 
 function parseGenericSection(section) {
-  let {id, title, entries} = section.fields
+  let { id, title, entries } = section.fields
 
   entries = entries.map(entry => {
     return {
@@ -71,6 +71,7 @@ function parseGenericSection(section) {
 
   })
 
+  console.log({entries});
   return {
     id,
     title,
@@ -79,11 +80,28 @@ function parseGenericSection(section) {
 }
 
 function parseReferences(referenceSection) {
-  let {title, references} = referenceSection.fields
+  let { title, references } = referenceSection.fields
 
   return {
     title,
     referenceSection: documentToHtmlString(references)
+  }
+}
+
+function parseRecommendations(rawRecommendations) {
+  const recommendations = rawRecommendations.map(recommendation => {
+    const downloadLink = recommendation.fields.recommendation.fields.file.url;
+
+    return {
+      ...recommendation.fields,
+      recommendation: downloadLink
+    }
+  });
+
+
+  return {
+    title: 'Recommendations',
+    recommendations
   }
 }
 
@@ -100,7 +118,7 @@ function parseResume(resume) {
     return
   }
 
-  let {title, heading, education, professionalExperience, publicSpeakingEvents, openSourceProjects, otherSections, references} = resume.fields
+  let { title, heading, education, professionalExperience, publicSpeakingEvents, openSourceProjects, otherSections, references, recommendations } = resume.fields
 
   return {
     slug: slugify(title, {
@@ -108,6 +126,7 @@ function parseResume(resume) {
     }),
     heading: parseHeading(heading),
     education: parseEducation(education),
+    recommendations: parseRecommendations(recommendations),
     experience: parseExperience(professionalExperience),
     publicSpeakingEvents: parseGenericSection(publicSpeakingEvents),
     openSourceProjects: parseGenericSection(openSourceProjects),
@@ -116,4 +135,4 @@ function parseResume(resume) {
   }
 }
 
-module.exports = {parseResume}
+module.exports = { parseResume }
